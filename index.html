@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>📊 Excel Intensivo - PDF Completo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #e8f5e9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .card {
+            max-width: 920px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px -15px rgba(0, 80, 30, 0.25);
+            overflow: hidden;
+            padding: 32px 32px 40px;
+            border: 1px solid #c8e6c9;
+        }
+
+        .excel-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #1e7e34;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 8px 22px 8px 18px;
+            border-radius: 60px;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(30, 126, 52, 0.25);
+        }
+        .excel-badge i { font-size: 1.2rem; }
+
+        .pdf-mockup {
+            background: #1b3b22;
+            border-radius: 28px;
+            padding: 20px 20px 12px 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 16px 40px -8px rgba(0, 40, 10, 0.4);
+            border: 1px solid #2e7d32;
+        }
+        .pdf-mockup img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            display: block;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            border: 1px solid #4caf50;
+        }
+        .pdf-mockup-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 6px 0 6px;
+            color: #a5d6a7;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .pdf-mockup-footer span i { margin-right: 6px; color: #81c784; }
+
+        h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: #1b3b22;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        h1 i { color: #1e7e34; margin-right: 8px; }
+
+        .subhead {
+            color: #2e4d3a;
+            font-size: 1.1rem;
+            border-left: 6px solid #2e7d32;
+            padding-left: 20px;
+            background: #f0f7f0;
+            border-radius: 0 16px 16px 0;
+            line-height: 1.6;
+            margin-bottom: 22px;
+            padding: 12px 20px;
+        }
+        .subhead i { color: #2e7d32; margin-right: 8px; }
+
+        .sumario {
+            background: #f1f8f1;
+            border-radius: 24px;
+            padding: 20px 24px;
+            margin: 18px 0 22px 0;
+            border: 1px solid #c8e6c9;
+        }
+        .sumario h3 {
+            color: #1b3b22;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sumario h3 i { color: #1e7e34; }
+        .sumario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px 20px;
+        }
+        .sumario-grid .item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1b3b22;
+            font-size: 0.92rem;
+            font-weight: 500;
+            padding: 4px 0;
+        }
+        .sumario-grid .item i { color: #1e7e34; font-size: 0.8rem; width: 16px; }
+        .sumario-grid .item .num {
+            background: #1e7e34;
+            color: #fff;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .preco-destaque {
+            background: #e8f5e9;
+            border-radius: 60px;
+            padding: 12px 32px;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 16px;
+            margin: 6px 0 20px 0;
+            border: 1px solid #a5d6a7;
+        }
+        .preco-destaque .valor {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1e7e34;
+        }
+        .preco-destaque .valor small { font-size: 1.3rem; font-weight: 600; }
+        .preco-destaque .de {
+            font-size: 1.1rem;
+            color: #558b2f;
+            text-decoration: line-through;
+        }
+        .badge-desconto {
+            background: #2e7d32;
+            color: #fff;
+            padding: 4px 18px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-comprar {
+            background: #1e7e34;
+            color: #fff;
+            border: none;
+            padding: 18px 38px;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 10px 24px -6px #1e7e34b3;
+            width: 100%;
+            justify-content: center;
+            margin: 6px 0 10px 0;
+        }
+        .btn-comprar:hover {
+            background: #156b2a;
+            transform: scale(1.02);
+            box-shadow: 0 14px 30px -6px #156b2ab3;
+        }
+        .btn-comprar i { font-size: 1.5rem; }
+
+        .beneficios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            background: #f1f8f1;
+            padding: 22px 20px;
+            border-radius: 28px;
+            margin: 24px 0 20px 0;
+            border: 1px solid #c8e6c9;
+        }
+        .beneficios div {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            color: #1b3b22;
+        }
+        .beneficios i { color: #1e7e34; font-size: 1.4rem; width: 28px; }
+
+        hr {
+            border: none;
+            border-top: 3px dashed #a5d6a7;
+            margin: 24px 0 20px 0;
+        }
+
+        .secao-pix {
+            background: #e8f5e9;
+            border-radius: 32px;
+            padding: 28px 26px;
+            margin-top: 10px;
+            border: 1px solid #a5d6a7;
+        }
+        .secao-pix h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1b3b22;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .secao-pix h2 i { color: #1e7e34; }
+        .instrucao-pix {
+            color: #2e4d3a;
+            margin: 10px 0 20px 0;
+            font-size: 1rem;
+        }
+
+        /* --- BOTÃO DE PAGAMENTO MERCADO PAGO --- */
+        .btn-pagar {
+            background: #009ee3;
+            color: #fff;
+            border: none;
+            padding: 18px 38px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: 0.25s;
+            width: 100%;
+            justify-content: center;
+            box-shadow: 0 8px 20px -6px #009ee3b3;
+            text-decoration: none;
+        }
+        .btn-pagar:hover {
+            background: #0082c4;
+            transform: scale(1.02);
+            box-shadow: 0 12px 28px -6px #0082c4b3;
+        }
+        .btn-pagar i {
+            font-size: 1.6rem;
+        }
+        .btn-pagar .mp-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.15);
+            padding: 2px 12px 2px 8px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 400;
+        }
+        .btn-pagar .mp-logo i {
+            font-size: 1rem;
+        }
+
+        .btn-pagar:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info-pagamento {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 16px 0 10px 0;
+            padding: 16px 20px;
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid #c8e6c9;
+        }
+        .info-pagamento .item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2e4d3a;
+            font-size: 0.9rem;
+        }
+        .info-pagamento .item i {
+            color: #1e7e34;
+            font-size: 1.2rem;
+        }
+
+        .link-download-area {
+            margin-top: 20px;
+            background: #c8e6c9;
+            border-radius: 20px;
+            padding: 18px 22px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            border: 2px solid #2e7d32;
+        }
+        .link-download-area.ativo { display: flex; }
+        .link-download-area .link-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #1b3b22;
+            font-weight: 600;
+        }
+        .link-download-area .link-info i {
+            font-size: 1.8rem;
+            color: #1e7e34;
+        }
+        .link-download-area a {
+            background: #1e7e34;
+            color: #fff;
+            padding: 10px 28px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+        }
+        .link-download-area a:hover {
+            background: #156b2a;
+            transform: scale(1.02);
+        }
+
+        .aviso {
+            font-size: 0.85rem;
+            color: #2e4d3a;
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .aviso i { color: #1e7e34; }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #558b2f;
+            font-size: 0.8rem;
+            border-top: 2px solid #c8e6c9;
+            padding-top: 22px;
+        }
+        .footer i { color: #1e7e34; }
+
+        /* Modal de confirmação */
+        .modal-confirmacao {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-confirmacao.ativo { display: flex; }
+        .modal-content {
+            background: #fff;
+            border-radius: 32px;
+            padding: 40px 36px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-content .icone {
+            font-size: 4rem;
+            color: #1e7e34;
+            margin-bottom: 16px;
+        }
+        .modal-content h2 {
+            color: #1b3b22;
+            margin-bottom: 8px;
+        }
+        .modal-content p {
+            color: #2e4d3a;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .modal-content .btn-modal {
+            background: #1e7e34;
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-content .btn-modal:hover {
+            background: #156b2a;
+        }
+
+        @media (max-width: 600px) {
+            .card { padding: 20px; }
+            h1 { font-size: 1.8rem; }
+            .preco-destaque .valor { font-size: 2.2rem; }
+            .btn-comprar { font-size: 1.1rem; padding: 16px 20px; }
+            .btn-pagar { font-size: 1rem; padding: 16px 20px; }
+            .pdf-mockup { padding: 12px; }
+            .sumario-grid { grid-template-columns: 1fr; }
+            .info-pagamento { flex-direction: column; gap: 10px; }
+            .link-download-area { flex-direction: column; align-items: stretch; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+
+    <!-- BADGE EXCEL -->
+    <div class="excel-badge">
+        <i class="fas fa-file-excel"></i> EXCEL INTENSIVO
+    </div>
+
+    <!-- MOCKUP -->
+    <div class="pdf-mockup">
+        <img 
+            src="https://i.ibb.co/TBfNFcmc/Atualizado-Material-Intensivo-Excel-para-Comercial.png" 
+            alt="Capa do PDF - Excel Intensivo para Área Comercial"
+            onerror="this.src='https://placehold.co/800x450/1b3b22/ffffff?text=📘+Excel+Intensivo+para+Comercial'"
+        />
+        <div class="pdf-mockup-footer">
+            <span><i class="fas fa-file-pdf"></i> 80 páginas</span>
+            <span><i class="fas fa-table"></i> +30 exercícios práticos</span>
+            <span><i class="fas fa-check-circle"></i> Fórmulas + Tabelas Dinâmicas</span>
+        </div>
+    </div>
+
+    <!-- TÍTULO -->
+    <h1><i class="fas fa-file-excel"></i> Excel Intensivo para Comercial</h1>
+    <div class="subhead">
+        <i class="fas fa-check-circle"></i> 
+        Aprenda fórmulas, tabelas dinâmicas, gráficos, PROCV e muito mais — com foco na área comercial.
+    </div>
+
+    <!-- SUMÁRIO -->
+    <div class="sumario">
+        <h3><i class="fas fa-list-ul"></i> Conteúdo do Material</h3>
+        <div class="sumario-grid">
+            <div class="item"><span class="num">1</span> Introdução ao Excel</div>
+            <div class="item"><span class="num">2</span> Inserindo os Primeiros Dados</div>
+            <div class="item"><span class="num">3</span> Copiar e Colar Dados</div>
+            <div class="item"><span class="num">4</span> Tabela, Filtros e Gráficos</div>
+            <div class="item"><span class="num">5</span> Fórmulas Básicas e Congelamento</div>
+            <div class="item"><span class="num">6</span> Referências</div>
+            <div class="item"><span class="num">7</span> Tabelas e Gráficos Dinâmicos e Proteção</div>
+            <div class="item"><span class="num">8</span> Funções Avançadas</div>
+            <div class="item"><span class="num">9</span> Utilidade de cada Função</div>
+            <div class="item"><span class="num">10</span> Atalhos do Excel</div>
+        </div>
+    </div>
+
+    <!-- PREÇO -->
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+        <div class="preco-destaque">
+            <span class="de">R$ 59,90</span>
+            <span class="valor">R$ 29,<small>90</small></span>
+        </div>
+        <span class="badge-desconto"><i class="fas fa-tag"></i> -50%</span>
+    </div>
+
+    <button class="btn-comprar" id="btnScrollPix">
+        <i class="fas fa-arrow-right"></i> QUERO MEU PDF AGORA
+    </button>
+
+    <!-- BENEFÍCIOS -->
+    <div class="beneficios">
+        <div><i class="fas fa-check-circle"></i> Fórmulas básicas e avançadas</div>
+        <div><i class="fas fa-check-circle"></i> Tabelas Dinâmicas</div>
+        <div><i class="fas fa-check-circle"></i> Gráficos e Mini Gráficos</div>
+        <div><i class="fas fa-check-circle"></i> PROCV e SEERRO</div>
+        <div><i class="fas fa-check-circle"></i> Atalhos do Excel</div>
+    </div>
+
+    <hr />
+
+    <!-- SEÇÃO DE PAGAMENTO -->
+    <div class="secao-pix" id="secaoPix">
+        <h2><i class="fas fa-credit-card"></i> Pagamento Seguro</h2>
+        <p class="instrucao-pix">
+            <i class="fas fa-shield-alt" style="margin-right: 10px; color: #1e7e34;"></i>
+            Clique no botão abaixo para ser redirecionado ao ambiente seguro do Mercado Pago e finalizar sua compra.
+        </p>
+
+        <!-- INFORMAÇÕES DO PAGAMENTO -->
+        <div class="info-pagamento">
+            <div class="item">
+                <i class="fas fa-tag"></i>
+                <span><strong>Produto:</strong> Excel Intensivo para Comercial</span>
+            </div>
+            <div class="item">
+                <i class="fas fa-money-bill-wave"></i>
+                <span><strong>Valor:</strong> R$ 29,90</span>
+            </div>
+            <div class="item">
+                <i class="fas fa-credit-card"></i>
+                <span><strong>Pagamento:</strong> PIX, Cartão, Boleto</span>
+            </div>
+        </div>
+
+        <!-- BOTÃO MERCADO PAGO -->
+        <a href="https://mpago.la/1qbE6Bc" target="_blank" class="btn-pagar" id="btnPagar">
+            <i class="fas fa-bolt"></i>
+            Pagar com Mercado Pago
+            <span class="mp-logo">
+                <i class="fas fa-credit-card"></i> MP
+            </span>
+        </a>
+
+        <div style="text-align: center; margin-top: 12px; font-size: 0.85rem; color: #6b8f7a;">
+            <i class="fas fa-lock" style="margin-right: 6px;"></i>
+            Ambiente seguro · Pagamento processado pelo Mercado Pago
+        </div>
+
+        <div class="aviso">
+            <i class="fas fa-info-circle"></i> 
+            Após o pagamento, você receberá o link de download por e-mail e também poderá acessá-lo aqui.
+        </div>
+
+        <!-- LINK DE DOWNLOAD (aparece após confirmação) -->
+        <div class="link-download-area" id="linkDownloadArea">
+            <div class="link-info">
+                <i class="fas fa-file-pdf"></i>
+                <span>✅ PDF liberado para download!</span>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1ECKdiCEfuYbBLPj2Z31eG52AxDsgwhkN?usp=drive_link" target="_blank" id="linkDownload">
+                <i class="fas fa-download"></i> Baixar PDF
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <i class="fas fa-shield-alt"></i> Pagamento 100% seguro via Mercado Pago · Suporte 24h
+    </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO -->
+<div class="modal-confirmacao" id="modalConfirmacao">
+    <div class="modal-content">
+        <div class="icone"><i class="fas fa-check-circle"></i></div>
+        <h2>Pagamento Confirmado!</h2>
+        <p>
+            Seu pagamento foi aprovado com sucesso. O link para download do PDF
+            <strong>Excel Intensivo para Comercial</strong> já está disponível abaixo.
+        </p>
+        <button class="btn-modal" id="btnFecharModal">
+            <i class="fas fa-file-pdf"></i> Ver link de download
+        </button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ============================================================
+        // CONFIGURAÇÕES
+        // ============================================================
+        const DRIVE_LINK = 'https://drive.google.com/drive/folders/1ECKdiCEfuYbBLPj2Z31eG52AxDsgwhkN?usp=drive_link';
+        const PAGAMENTO_LINK = 'https://mpago.la/1qbE6Bc';
+
+        // ============================================================
+        // ELEMENTOS
+        // ============================================================
+        const btnScroll = document.getElementById('btnScrollPix');
+        const secaoPix = document.getElementById('secaoPix');
+        const btnPagar = document.getElementById('btnPagar');
+        const linkDownloadArea = document.getElementById('linkDownloadArea');
+        const linkDownload = document.getElementById('linkDownload');
+        const modalConfirmacao = document.getElementById('modalConfirmacao');
+        const btnFecharModal = document.getElementById('btnFecharModal');
+
+        // ============================================================
+        // FUNÇÕES
+        // ============================================================
+
+        // Verifica se o usuário já pagou (via parâmetro na URL)
+        function verificarPagamento() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pago = urlParams.get('pago');
+            
+            if (pago === 'true') {
+                liberarDownload();
+                modalConfirmacao.classList.add('ativo');
+            }
+        }
+
+        // Libera o link de download
+        function liberarDownload() {
+            linkDownloadArea.classList.add('ativo');
+            linkDownload.href = DRIVE_LINK;
+            
+            // Salva no localStorage para não perder o acesso
+            localStorage.setItem('pdf_excel_liberado', 'true');
+        }
+
+        // Verifica se já foi liberado anteriormente
+        function verificarAcessoAnterior() {
+            if (localStorage.getItem('pdf_excel_liberado') === 'true') {
+                liberarDownload();
+            }
+        }
+
+        // Scroll para seção de pagamento
+        btnScroll.addEventListener('click', () => {
+            secaoPix.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Botão do Mercado Pago - salva intenção de compra
+        btnPagar.addEventListener('click', function(e) {
+            // Salva que o usuário está tentando comprar
+            localStorage.setItem('compra_iniciada', 'true');
+            // O link já vai abrir em nova aba (target="_blank")
+        });
+
+        // Fechar modal
+        btnFecharModal.addEventListener('click', () => {
+            modalConfirmacao.classList.remove('ativo');
+            // Rola até o link de download
+            linkDownloadArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        // Clicar fora do modal fecha
+        modalConfirmacao.addEventListener('click', (e) => {
+            if (e.target === modalConfirmacao) {
+                modalConfirmacao.classList.remove('ativo');
+            }
+        });
+
+        // ============================================================
+        // COMO SIMULAR O RETORNO DO PAGAMENTO
+        // ============================================================
+        // Após o cliente pagar, o Mercado Pago redireciona para a URL
+        // que você configurou. Adicione ?pago=true na URL de retorno.
+        //
+        // Exemplo: https://seudominio.com/pagina.html?pago=true
+        //
+        // No Mercado Pago, configure o "Return URL" para sua página
+        // com o parâmetro pago=true
+        // ============================================================
+
+        // ============================================================
+        // INICIALIZAÇÃO
+        // ============================================================
+        verificarAcessoAnterior();
+        verificarPagamento();
+
+        // Se o usuário chegou com pago=true, remove o parâmetro da URL
+        if (window.location.search.includes('pago=true')) {
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+
+        console.log('🚀 Página de vendas Excel com Mercado Pago carregada!');
+        console.log('🔗 Link de pagamento:', PAGAMENTO_LINK);
+        console.log('📁 Link do PDF:', DRIVE_LINK);
+        console.log('💡 Após o pagamento, redirecione para esta página com ?pago=true');
+    })();
+</script>
+
+</body>
+</html>
