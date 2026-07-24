@@ -246,7 +246,6 @@
             font-size: 1rem;
         }
 
-        /* --- BOTÃO DE PAGAMENTO MERCADO PAGO --- */
         .btn-pagar {
             background: #009ee3;
             color: #fff;
@@ -270,9 +269,7 @@
             transform: scale(1.02);
             box-shadow: 0 12px 28px -6px #0082c4b3;
         }
-        .btn-pagar i {
-            font-size: 1.6rem;
-        }
+        .btn-pagar i { font-size: 1.6rem; }
         .btn-pagar .mp-logo {
             display: inline-flex;
             align-items: center;
@@ -283,15 +280,7 @@
             font-size: 0.75rem;
             font-weight: 400;
         }
-        .btn-pagar .mp-logo i {
-            font-size: 1rem;
-        }
-
-        .btn-pagar:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
+        .btn-pagar .mp-logo i { font-size: 1rem; }
 
         .info-pagamento {
             display: flex;
@@ -314,6 +303,30 @@
             color: #1e7e34;
             font-size: 1.2rem;
         }
+
+        /* --- BOTÃO DE CONFIRMAR PAGAMENTO MANUAL --- */
+        .btn-confirmar-pagamento {
+            background: #2e7d32;
+            color: #fff;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.25s;
+            width: 100%;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .btn-confirmar-pagamento:hover {
+            background: #1e6b22;
+            transform: scale(1.02);
+        }
+        .btn-confirmar-pagamento i { font-size: 1.3rem; }
 
         .link-download-area {
             margin-top: 20px;
@@ -376,7 +389,32 @@
         }
         .footer i { color: #1e7e34; }
 
-        /* Modal de confirmação */
+        /* --- ALERTA DE PAGAMENTO --- */
+        .alerta-pagamento {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .alerta-pagamento i {
+            color: #856404;
+            font-size: 1.4rem;
+            margin-top: 2px;
+        }
+        .alerta-pagamento .texto {
+            color: #856404;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .alerta-pagamento .texto strong {
+            color: #533f03;
+        }
+
+        /* --- MODAL --- */
         .modal-confirmacao {
             display: none;
             position: fixed;
@@ -443,6 +481,7 @@
             .sumario-grid { grid-template-columns: 1fr; }
             .info-pagamento { flex-direction: column; gap: 10px; }
             .link-download-area { flex-direction: column; align-items: stretch; text-align: center; }
+            .alerta-pagamento { flex-direction: column; align-items: center; text-align: center; }
         }
     </style>
 </head>
@@ -522,8 +561,19 @@
         <h2><i class="fas fa-credit-card"></i> Pagamento Seguro</h2>
         <p class="instrucao-pix">
             <i class="fas fa-shield-alt" style="margin-right: 10px; color: #1e7e34;"></i>
-            Clique no botão abaixo para ser redirecionado ao ambiente seguro do Mercado Pago e finalizar sua compra.
+            Clique no botão abaixo para ser redirecionado ao ambiente seguro do Mercado Pago.
         </p>
+
+        <!-- ALERTA IMPORTANTE -->
+        <div class="alerta-pagamento">
+            <i class="fas fa-info-circle"></i>
+            <div class="texto">
+                <strong>📌 Após o pagamento:</strong> Volte para esta página e clique em 
+                <strong>"Já paguei! Confirmar acesso"</strong> para liberar seu download.
+                <br>
+                <small style="color: #6c5a04;">Se você já pagou e não voltou automaticamente, use o botão abaixo.</small>
+            </div>
+        </div>
 
         <!-- INFORMAÇÕES DO PAGAMENTO -->
         <div class="info-pagamento">
@@ -550,17 +600,18 @@
             </span>
         </a>
 
+        <!-- BOTÃO DE CONFIRMAR PAGAMENTO MANUAL -->
+        <button class="btn-confirmar-pagamento" id="btnConfirmarPagamento">
+            <i class="fas fa-check-circle"></i>
+            ✅ Já paguei! Confirmar acesso
+        </button>
+
         <div style="text-align: center; margin-top: 12px; font-size: 0.85rem; color: #6b8f7a;">
             <i class="fas fa-lock" style="margin-right: 6px;"></i>
             Ambiente seguro · Pagamento processado pelo Mercado Pago
         </div>
 
-        <div class="aviso">
-            <i class="fas fa-info-circle"></i> 
-            Após o pagamento, você receberá o link de download por e-mail e também poderá acessá-lo aqui.
-        </div>
-
-        <!-- LINK DE DOWNLOAD (aparece após confirmação) -->
+        <!-- LINK DE DOWNLOAD -->
         <div class="link-download-area" id="linkDownloadArea">
             <div class="link-info">
                 <i class="fas fa-file-pdf"></i>
@@ -569,6 +620,11 @@
             <a href="https://drive.google.com/drive/folders/1ECKdiCEfuYbBLPj2Z31eG52AxDsgwhkN?usp=drive_link" target="_blank" id="linkDownload">
                 <i class="fas fa-download"></i> Baixar PDF
             </a>
+        </div>
+
+        <div class="aviso">
+            <i class="fas fa-info-circle"></i> 
+            Após confirmar o pagamento, o link será liberado e salvo no seu navegador.
         </div>
     </div>
 
@@ -583,8 +639,9 @@
         <div class="icone"><i class="fas fa-check-circle"></i></div>
         <h2>Pagamento Confirmado!</h2>
         <p>
-            Seu pagamento foi aprovado com sucesso. O link para download do PDF
-            <strong>Excel Intensivo para Comercial</strong> já está disponível abaixo.
+            Seu acesso ao PDF <strong>Excel Intensivo para Comercial</strong> foi liberado com sucesso!
+            <br><br>
+            O link de download está disponível abaixo. Você também receberá um e-mail com o acesso.
         </p>
         <button class="btn-modal" id="btnFecharModal">
             <i class="fas fa-file-pdf"></i> Ver link de download
@@ -606,6 +663,7 @@
         const btnScroll = document.getElementById('btnScrollPix');
         const secaoPix = document.getElementById('secaoPix');
         const btnPagar = document.getElementById('btnPagar');
+        const btnConfirmar = document.getElementById('btnConfirmarPagamento');
         const linkDownloadArea = document.getElementById('linkDownloadArea');
         const linkDownload = document.getElementById('linkDownload');
         const modalConfirmacao = document.getElementById('modalConfirmacao');
@@ -615,50 +673,85 @@
         // FUNÇÕES
         // ============================================================
 
-        // Verifica se o usuário já pagou (via parâmetro na URL)
-        function verificarPagamento() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const pago = urlParams.get('pago');
-            
-            if (pago === 'true') {
-                liberarDownload();
-                modalConfirmacao.classList.add('ativo');
-            }
-        }
-
         // Libera o link de download
-        function liberarDownload() {
+        function liberarDownload(mostrarModal = true) {
             linkDownloadArea.classList.add('ativo');
             linkDownload.href = DRIVE_LINK;
             
             // Salva no localStorage para não perder o acesso
             localStorage.setItem('pdf_excel_liberado', 'true');
+            localStorage.setItem('pdf_excel_data', new Date().toISOString());
+
+            if (mostrarModal) {
+                modalConfirmacao.classList.add('ativo');
+            }
         }
 
         // Verifica se já foi liberado anteriormente
         function verificarAcessoAnterior() {
             if (localStorage.getItem('pdf_excel_liberado') === 'true') {
-                liberarDownload();
+                liberarDownload(false);
+                // Mostra uma mensagem sutil
+                console.log('✅ Acesso já liberado anteriormente');
             }
         }
+
+        // Verifica se veio com parâmetro de pagamento
+        function verificarPagamento() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pago = urlParams.get('pago');
+            const status = urlParams.get('status');
+            const paymentId = urlParams.get('payment_id');
+            
+            // Se veio com ?pago=true ou ?status=approved
+            if (pago === 'true' || status === 'approved') {
+                liberarDownload(true);
+                // Remove os parâmetros da URL
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+                return true;
+            }
+            
+            // Se veio com ?status=rejected ou ?status=cancelled
+            if (status === 'rejected' || status === 'cancelled') {
+                alert('❌ O pagamento não foi aprovado. Tente novamente.');
+                return false;
+            }
+            
+            return false;
+        }
+
+        // ============================================================
+        // EVENTOS
+        // ============================================================
 
         // Scroll para seção de pagamento
         btnScroll.addEventListener('click', () => {
             secaoPix.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
-        // Botão do Mercado Pago - salva intenção de compra
+        // Botão de confirmar pagamento (manual)
+        btnConfirmar.addEventListener('click', () => {
+            // Pergunta se o usuário realmente pagou
+            if (confirm('Você confirma que realizou o pagamento via Mercado Pago?')) {
+                liberarDownload(true);
+            }
+        });
+
+        // Botão do Mercado Pago - abre em nova aba
         btnPagar.addEventListener('click', function(e) {
-            // Salva que o usuário está tentando comprar
+            // Salva que o usuário iniciou a compra
             localStorage.setItem('compra_iniciada', 'true');
-            // O link já vai abrir em nova aba (target="_blank")
+            // O link já abre em nova aba (target="_blank")
         });
 
         // Fechar modal
         btnFecharModal.addEventListener('click', () => {
             modalConfirmacao.classList.remove('ativo');
             // Rola até o link de download
-            linkDownloadArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                linkDownloadArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
         });
 
         // Clicar fora do modal fecha
@@ -669,33 +762,40 @@
         });
 
         // ============================================================
-        // COMO SIMULAR O RETORNO DO PAGAMENTO
+        // COMO CONFIGURAR O RETORNO NO MERCADO PAGO
         // ============================================================
-        // Após o cliente pagar, o Mercado Pago redireciona para a URL
-        // que você configurou. Adicione ?pago=true na URL de retorno.
+        // 1. No painel do Mercado Pago, edite seu link de pagamento
+        // 2. Em "Configurações avançadas" > "URL de retorno"
+        // 3. Adicione: https://seudominio.com/sua-pagina.html?status=approved
         //
-        // Exemplo: https://seudominio.com/pagina.html?pago=true
-        //
-        // No Mercado Pago, configure o "Return URL" para sua página
-        // com o parâmetro pago=true
+        // Ou use o redirecionamento manual com o botão "Já paguei!"
         // ============================================================
 
         // ============================================================
         // INICIALIZAÇÃO
         // ============================================================
+        
+        // Verifica se já tem acesso
         verificarAcessoAnterior();
-        verificarPagamento();
+        
+        // Verifica se veio com parâmetro de pagamento
+        const pagamentoConfirmado = verificarPagamento();
 
-        // Se o usuário chegou com pago=true, remove o parâmetro da URL
-        if (window.location.search.includes('pago=true')) {
-            const newUrl = window.location.pathname;
-            window.history.replaceState({}, document.title, newUrl);
-        }
-
-        console.log('🚀 Página de vendas Excel com Mercado Pago carregada!');
+        console.log('🚀 Página de vendas Excel carregada!');
         console.log('🔗 Link de pagamento:', PAGAMENTO_LINK);
         console.log('📁 Link do PDF:', DRIVE_LINK);
-        console.log('💡 Após o pagamento, redirecione para esta página com ?pago=true');
+        console.log('');
+        console.log('📌 INSTRUÇÕES:');
+        console.log('1. Clique em "Pagar com Mercado Pago"');
+        console.log('2. Faça o pagamento');
+        console.log('3. Volte para esta página e clique em "Já paguei! Confirmar acesso"');
+        console.log('   OU configure a URL de retorno com ?status=approved');
+        console.log('');
+        console.log('💾 O acesso fica salvo no navegador (localStorage)');
+        
+        if (pagamentoConfirmado) {
+            console.log('✅ Pagamento confirmado via URL!');
+        }
     })();
 </script>
 
