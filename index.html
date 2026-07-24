@@ -281,6 +281,11 @@
             font-weight: 400;
         }
         .btn-pagar .mp-logo i { font-size: 1rem; }
+        .btn-pagar:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
 
         .info-pagamento {
             display: flex;
@@ -449,7 +454,7 @@
 <div class="card">
 
     <div class="excel-badge">
-        <i class="fas fa-file-excel"></i> INTENSIVO EXCEL
+        <i class="fas fa-file-excel"></i> EXCEL INTENSIVO
     </div>
 
     <div class="pdf-mockup">
@@ -460,6 +465,7 @@
         />
         <div class="pdf-mockup-footer">
             <span><i class="fas fa-file-pdf"></i> 80 páginas</span>
+            <span><i class="fas fa-table"></i> +30 exercícios práticos</span>
             <span><i class="fas fa-check-circle"></i> Fórmulas + Tabelas Dinâmicas</span>
         </div>
     </div>
@@ -581,9 +587,8 @@
         // ============================================================
         const DRIVE_LINK = 'https://drive.google.com/drive/folders/1ECKdiCEfuYbBLPj2Z31eG52AxDsgwhkN?usp=drive_link';
         
-        // Detecta a URL base automaticamente
-        const BASE_URL = window.location.origin;
-        const API_URL = BASE_URL + '/api';
+        // URL da API - usa URL relativa para funcionar localmente e na Vercel
+        const API_URL = '/api';
 
         // ============================================================
         // ELEMENTOS
@@ -684,7 +689,7 @@
 
             // Desabilita o botão
             btnPagar.disabled = true;
-            btnPagar.innerHTML = '<span class="loading"></span> Gerando PIX...';
+            btnPagar.innerHTML = '<span class="loading"></span> Gerando pagamento...';
             
             // Mostra status de aguardando
             statusAguardando.classList.add('ativo');
@@ -698,6 +703,8 @@
                 // 2. Abre o link de pagamento do Mercado Pago
                 if (paymentData.paymentLink) {
                     window.open(paymentData.paymentLink, '_blank');
+                } else {
+                    throw new Error('Link de pagamento não gerado');
                 }
                 
                 // 3. Inicia verificação do status
@@ -756,7 +763,7 @@
                         clearInterval(checkInterval);
                         statusAguardando.classList.remove('ativo');
                         statusErro.classList.add('ativo');
-                        erroMsg.textContent = 'Tempo limite excedido. Se você já pagou, aguarde alguns minutos.';
+                        erroMsg.textContent = '⏱️ Tempo limite excedido. Se você já pagou, aguarde alguns minutos e recarregue a página.';
                         
                         btnPagar.disabled = false;
                         btnPagar.innerHTML = '<i class="fas fa-bolt"></i> Pagar com Mercado Pago';
@@ -772,6 +779,28 @@
                     console.error('Erro na verificação:', error);
                 }
             }, 5000);
+        }
+
+        // ============================================================
+        // VERIFICA RETORNO DO MERCADO PAGO VIA URL
+        // ============================================================
+        function verificarRetornoMercadoPago() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const paymentId = urlParams.get('payment_id');
+            
+            if (status === 'approved' && paymentId) {
+                // Simula confirmação via webhook
+                statusAguardando.classList.remove('ativo');
+                statusAprovado.classList.add('ativo');
+                liberarDownload();
+                
+                // Remove os parâmetros da URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+                return true;
+            }
+            
+            return false;
         }
 
         // ============================================================
@@ -796,26 +825,18 @@
         // INICIALIZAÇÃO
         // ============================================================
         
+        // 1. Verifica se já tem acesso salvo
         verificarAcessoAnterior();
-
-        // Verifica se veio com parâmetro de retorno
-        const urlParams = new URLSearchParams(window.location.search);
-        const status = urlParams.get('status');
-        const payment_id = urlParams.get('payment_id');
         
-        if (status === 'approved' && payment_id) {
-            // Simula confirmação via webhook
-            statusAguardando.classList.remove('ativo');
-            statusAprovado.classList.add('ativo');
-            liberarDownload();
-            
-            // Remove parâmetros da URL
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
+        // 2. Verifica se veio com parâmetro de retorno do Mercado Pago
+        verificarRetornoMercadoPago();
 
         console.log('🚀 Página de vendas Excel carregada!');
         console.log(`📡 API URL: ${API_URL}`);
         console.log('📁 Link do PDF:', DRIVE_LINK);
+        console.log('');
+        console.log('💡 Dica: Se o pagamento não voltar automaticamente,');
+        console.log('   aguarde alguns segundos que a página verifica automaticamente.');
     })();
 </script>
 
